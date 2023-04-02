@@ -1,34 +1,66 @@
-
-
 class Solution {
     public List<List<Integer>> findMatrix(int[] nums) {
-        Map<Integer, Integer> map = new HashMap<>();
-        Set<Integer> set = new HashSet<>();
-        for (int i : nums) {
-            map.put(i, 1 + map.getOrDefault(i, 0));
-            set.add(i);
+        int a[]=new int[201];
+        for(int i:nums)
+        {
+            a[i]++;
         }
-        
-        List<List<Integer>> ans = new ArrayList<>();
-        while (!map.isEmpty()) {
-            List<Integer> row = new ArrayList<>();
-            for (int key : set) {
-                if (map.containsKey(key)) {
-                    int cnt = map.get(key); 
-                    row.add(key);   
-                    if (cnt == 1) {
-                        map.remove(key);   
-                    } else {
-                        map.put(key, --cnt);
-                    } 
-                }  
+        List<List<Integer>> kk=new ArrayList<>();
+        while(true)
+        {
+            List<Integer> k=new ArrayList<>();
+            int x=0;
+            for(int i=0;i<201;i++)
+            {
+                if(a[i]>0)
+                {
+                    k.add(i);
+                    a[i]-=1;
+                }
+                else
+                {
+                    x++;
+                }
             }
-            ans.add(row);
+            if(x==201)
+            {
+                break;
+            }
+            kk.add(new ArrayList<>(k));
         }
-        
-        return ans;
+        return kk;
     }
 }
+
+// class Solution {
+//     public List<List<Integer>> findMatrix(int[] nums) {
+//         Map<Integer, Integer> map = new HashMap<>();
+//         Set<Integer> set = new HashSet<>();
+//         for (int i : nums) {
+//             map.put(i, 1 + map.getOrDefault(i, 0));
+//             set.add(i);
+//         }
+        
+//         List<List<Integer>> ans = new ArrayList<>();
+//         while (!map.isEmpty()) {
+//             List<Integer> row = new ArrayList<>();
+//             for (int key : set) {
+//                 if (map.containsKey(key)) {
+//                     int cnt = map.get(key); 
+//                     row.add(key);   
+//                     if (cnt == 1) {
+//                         map.remove(key);   
+//                     } else {
+//                         map.put(key, --cnt);
+//                     } 
+//                 }  
+//             }
+//             ans.add(row);
+//         }
+        
+//         return ans;
+//     }
+// }
 
 
 // class Solution {
