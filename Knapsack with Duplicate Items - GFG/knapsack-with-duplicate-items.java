@@ -32,7 +32,32 @@ class GFG{
 
 //User function Template for Java
 
-class Solution{                                   //recursion
+// class Solution{                                   //recursion
+//     static int knapSack(int N, int W, int val[], int wt[])
+//     {
+//         // code here
+//         int[][] dp=new int[N][W+1];
+//         for(int[] row:dp){
+//             Arrays.fill(row,-1);
+//         }
+//         return f(N-1,W,val,wt,dp);
+//     }
+//     static int f(int ind,int w,int[] val,int[] wt,int[][] dp){
+//         if(ind==0){
+//             return ((int)w/wt[0])*val[0];
+//         }
+        
+//         if(dp[ind][w]!=-1) return dp[ind][w];
+//         int not_take=f(ind-1,w,val,wt,dp);
+//         int take=Integer.MIN_VALUE;
+//         if(wt[ind] <= w)
+//           take=val[ind]+f(ind,w-wt[ind],val,wt,dp);
+        
+//         return dp[ind][w]=Math.max(not_take,take);
+//     }
+// }
+
+class Solution{                                   //Tabulation
     static int knapSack(int N, int W, int val[], int wt[])
     {
         // code here
@@ -54,9 +79,6 @@ class Solution{                                   //recursion
                 
             }
              return dp[N-1][W];
-             
-             
-   
         }
         
     }
