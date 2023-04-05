@@ -37,22 +37,26 @@ class Solution{                                   //recursion
     {
         // code here
         int[][] dp=new int[N][W+1];
-        for(int[] row:dp){
-            Arrays.fill(row,-1);
+          for(int i=wt[0]; i<=W; i++){
+        dp[0][i] = ((int) i/wt[0]) * val[0];
         }
-        return f(N-1,W,val,wt,dp);
-    }
-    static int f(int ind,int w,int[] val,int[] wt,int[][] dp){
-        if(ind==0){
-            return ((int)w/wt[0])*val[0];
+       
+        for(int ind=1;ind<N;ind++){
+            for(int w=0;w<=W;w++){
+              //   if(dp[ind][w]!=-1) return dp[ind][w];
+                 int not_take=dp[ind-1][w];
+                 int take=Integer.MIN_VALUE;
+                 if(wt[ind] <= w)
+                 take=val[ind]+dp[ind][w-wt[ind]];
+        
+                    dp[ind][w]=Math.max(not_take,take);
+                 }
+                
+            }
+             return dp[N-1][W];
+             
+             
+   
         }
         
-        if(dp[ind][w]!=-1) return dp[ind][w];
-        int not_take=f(ind-1,w,val,wt,dp);
-        int take=Integer.MIN_VALUE;
-        if(wt[ind] <= w)
-          take=val[ind]+f(ind,w-wt[ind],val,wt,dp);
-        
-        return dp[ind][w]=Math.max(not_take,take);
     }
-}
