@@ -1,38 +1,62 @@
-class Solution {
-    public String longestPalindrome(String s) {
-        // below code is, just traversing in digonally top-right-half 2d matrix of 's' will be giving our ans
+// class Solution {                                     //completed
+//     public String longestPalindrome(String s) {
+//         // below code is, just traversing in digonally top-right-half 2d matrix of 's' will be giving our ans
         
-        boolean[][] dp = new boolean[s.length()][s.length()];
+//         boolean[][] dp = new boolean[s.length()][s.length()];
         
-        String lpss = "";
-        for(int k = 0; k<dp.length; k++) {
-            for(int i = 0, j = k; j<dp.length; i++, j++) {
-                if(k == 0) {
-                    dp[i][j] = true;
-                }
-                else if(k == 1) {
-                    if(s.charAt(i) == s.charAt(j)) {
-                        dp[i][j] = true;
-                    }
-                }
-                else {
-                    if(dp[i + 1][j - 1] == true && s.charAt(i) == s.charAt(j)) {
-                        dp[i][j] = true;
-                    }
-                }
+//         String lpss = "";
+//         for(int k = 0; k<dp.length; k++) {
+//             for(int i = 0, j = k; j<dp.length; i++, j++) {
+//                 if(k == 0) {
+//                     dp[i][j] = true;
+//                 }
+//                 else if(k == 1) {
+//                     if(s.charAt(i) == s.charAt(j)) {
+//                         dp[i][j] = true;
+//                     }
+//                 }
+//                 else {
+//                     if(dp[i + 1][j - 1] == true && s.charAt(i) == s.charAt(j)) {
+//                         dp[i][j] = true;
+//                     }
+//                 }
                 
-                if(dp[i][j] == true) {
-                    lpss = s.substring(i, j + 1);
-                }
-            }
-        }
+//                 if(dp[i][j] == true) {
+//                     lpss = s.substring(i, j + 1);
+//                 }
+//             }
+//         }
         
-        return lpss;
+//         return lpss;
+//     }
+// }
+
+
+class Solution {
+    int max = 0;
+    int maxl = 0;
+    int maxr = 0;
+    
+    public String longestPalindrome(String s) {
+        for(int i = 0; i < s.length(); i++) {
+            expandPalindrome(s, i-1, i+1);
+            expandPalindrome(s, i, i+1);
+        }
+        return s.substring(maxl, maxr+1);
+    }
+    
+    private void expandPalindrome(String s, int l, int r) {
+        while(0 <= l && r < s.length() && s.charAt(l) == s.charAt(r)) {
+            if(max < r-l) {
+                max = r-l;
+                maxr = r;
+                maxl = l;
+            }
+            l--;
+            r++;
+        }
     }
 }
-
-
-
 
 // class Solution {
 //     public String longestPalindrome(String s) {
