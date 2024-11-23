@@ -3,7 +3,7 @@ class Solution {
         int l=0,r=0;
         int TL= nums.length;
         int sum=0;
-        int minLen = Integer.MAX_VALUE; 
+        int minLen = nums.length + 1; 
         while(r<TL){
             sum+=nums[r];
             while(sum>=target){
@@ -14,6 +14,6 @@ class Solution {
             }
             r++;
         }
-        return minLen == Integer.MAX_VALUE ? 0 : minLen;
+        return minLen ==  nums.length + 1 ? 0 : minLen;
     }
 }
