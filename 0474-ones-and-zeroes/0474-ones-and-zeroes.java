@@ -1,50 +1,77 @@
 class Solution {
-    private int[][][] dp;
-    public int findMaxForm(String[] strs, int m, int n) {
-        dp=new int[strs.length+1][n+1][m+1];
-        for(int i=0;i<=strs.length;i++){
-            for(int j=0;j<=n;j++){
-                for(int k=0;k<=m;k++){
-                    dp[i][j][k]=-1;
-                }
-            }
-        }
+    
+    //Bottom-Up Approach
+     public int findMaxForm(String[] strs, int m, int n) {
+         int [][] count=new int[m+1][n+1];
+         
+         for(String str:strs){
+             int one=0,zero=0;
+             for(char c:str.toCharArray()){
+                 if(c=='1'){
+                     one++;
+                 }else{
+                     zero++;
+                 }
+             }
+            for(int i=m;i>=zero; i--){
+                 for(int j=n;j>=one;j--){
+                     count[i][j]=Math.max(count[i][j],1+count[i-zero][j-one]);
+                 }
+             }
+            
+         }
+         
+          return count[m][n];
+     } 
+    
+    
+// Top-Down approach
+//     private int[][][] dp;
+//     public int findMaxForm(String[] strs, int m, int n) {
+//         dp=new int[strs.length+1][n+1][m+1];
+//         for(int i=0;i<=strs.length;i++){
+//             for(int j=0;j<=n;j++){
+//                 for(int k=0;k<=m;k++){
+//                     dp[i][j][k]=-1;
+//                 }
+//             }
+//         }
         
-        int[][] counts=new int[strs.length][2];
-        for(int i=0;i<strs.length;i++){
-            int nZeros=0,nOnes=0;
-            for(char c:strs[i].toCharArray()){
-                if(c=='1'){
-                    nOnes++;
-                }else{
-                    nZeros++;
-                }
+//         int[][] counts=new int[strs.length][2];
+//         for(int i=0;i<strs.length;i++){
+//             int nZeros=0,nOnes=0;
+//             for(char c:strs[i].toCharArray()){
+//                 if(c=='1'){
+//                     nOnes++;
+//                 }else{
+//                     nZeros++;
+//                 }
                 
-            }
-            counts[i]=new int[]{nOnes,nZeros};
-        }
+//             }
+//             counts[i]=new int[]{nOnes,nZeros};
+//         }
         
-        return sub(counts,0,n,m);
+//         return sub(counts,0,n,m);
         
-    }
-    private int sub(int[][] counts,int index,int nOnes,int nZeros){
-        if(index==counts.length || (nZeros==0 && nOnes==0)){
-            return 0;
-        }
+//     }
+//     private int sub(int[][] counts,int index,int nOnes,int nZeros){
+//         if(index==counts.length || (nZeros==0 && nOnes==0)){
+//             return 0;
+//         }
         
-        if(dp[index][nOnes][nZeros]!=-1){
-            return dp[index][nOnes][nZeros];
-        }
+//         if(dp[index][nOnes][nZeros]!=-1){
+//             return dp[index][nOnes][nZeros];
+//         }
         
-        if(counts[index][0]>nOnes || counts[index][1]>nZeros){
-            return dp[index][nOnes][nZeros]=sub(counts,index+1,nOnes,nZeros);
-        }
+//         if(counts[index][0]>nOnes || counts[index][1]>nZeros){
+//             return dp[index][nOnes][nZeros]=sub(counts,index+1,nOnes,nZeros);
+//         }
         
-        int includes=1+sub(counts,index+1,nOnes-counts[index][0],nZeros-counts[index][1]);
-        int excludes=sub(counts,index+1,nOnes,nZeros);
+//         int includes=1+sub(counts,index+1,nOnes-counts[index][0],nZeros-counts[index][1]);
+//         int excludes=sub(counts,index+1,nOnes,nZeros);
         
-        return dp[index][nOnes][nZeros]=Math.max(includes,excludes);
-    }
+//         return dp[index][nOnes][nZeros]=Math.max(includes,excludes);
+//     }
     
     
     
